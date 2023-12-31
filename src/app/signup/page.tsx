@@ -18,7 +18,6 @@ export default function SignupPage() {
   const [loading, setLoading] = React.useState(false);
 
   const onSignup = async () => {
-    e.preventDefault();
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
