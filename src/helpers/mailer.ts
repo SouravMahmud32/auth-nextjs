@@ -29,7 +29,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     });
 
     const mailOptions = {
-      from: "sourav@gmail.com", // Update this to the actual sender email
+      from: "boyofbrokenheart@gmail.com", // Update this to the actual sender email
       to: email,
       subject:
         emailType === "VERIFY" ? "Verify your email" : "Reset your password",
