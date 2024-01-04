@@ -19,13 +19,21 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       });
     }
 
-    const transport = nodemailer.createTransport({
+
+    const { createTransport } = nodemailer;
+
+// Ensure that required environment variables are defined
+if (!process.env.EMAIL_HOST || !process.env.EMAIL_PORT || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  throw new Error("Email configuration missing. Check environment variables.");
+}
+
+    const transport = createTransport({
       host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+  port: parseInt(process.env.EMAIL_PORT), // Ensure that port is parsed as an integer
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
     });
 
     const mailOptions = {
