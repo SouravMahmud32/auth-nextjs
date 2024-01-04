@@ -14,6 +14,18 @@ pnpm dev
 bun dev
 ```
 
+## Tech Stack
+- Nextjs
+- typescript
+- mongodb
+- mailtrap
+
+
+---
+Available live website link
+[live website link](https://auth-nextjs-git-main-souravmahmud32.vercel.app/login)
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
