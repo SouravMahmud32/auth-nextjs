@@ -1,11 +1,11 @@
 import nodemailer from "nodemailer";
 import User from "@/models/userModel";
-import bcyptjs from "bcryptjs";
+import bcryptjs from "bcryptjs";
 
 export const sendEmail = async ({ email, emailType, userId }: any) => {
   try {
     // create a hashed token
-    const hashedToken = await bcyptjs.hash(userId.toString(), 10);
+    const hashedToken = await bcryptjs.hash(userId.toString(), 10);
 
     if (emailType === "VERIFY") {
       await User.findByIdAndUpdate(userId, {
@@ -29,22 +29,26 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     });
 
     const mailOptions = {
-      from: "sourav@gamail.com",
+      from: "sourav@gmail.com", // Update this to the actual sender email
       to: email,
       subject:
         emailType === "VERIFY" ? "Verify your email" : "Reset your password",
       html: `<p>Click <a href="${
         process.env.DOMAIN
-      }/ verfyemail?token=${hashedToken}">here</a> to ${
+      }/verifyemail?token=${hashedToken}">here</a> to ${
         emailType === "VERIFY" ? "Verify your email" : "Reset your password"
       } or copy and paste the link below in your browser. <br> ${
         process.env.DOMAIN
       }/verifyemail?token=${hashedToken}</p>`,
+      text: `Click the following link to ${
+        emailType === "VERIFY" ? "Verify your email" : "Reset your password"
+      }: ${process.env.DOMAIN}/verifyemail?token=${hashedToken}`,
     };
 
     const mailResponse = await transport.sendMail(mailOptions);
     return mailResponse;
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error("Error sending email:", error.message);
+    throw new Error("Failed to send email");
   }
 };
